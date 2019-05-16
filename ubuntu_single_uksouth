@@ -19,7 +19,7 @@ resource "azurerm_virtual_network" "RENAME" {
     name                = "RENAME"
     address_space       = ["10.0.0.0/16"]
     location            = "uksouth"
-    resource_group_name = "${azurerm_resource_group.hewsolgroup1.name}"
+    resource_group_name = "${azurerm_resource_group.RENAME.name}"
 
     tags {
         environment = "ENV TAGS HERE"
@@ -29,8 +29,8 @@ resource "azurerm_virtual_network" "RENAME" {
 # Create subnet
 resource "azurerm_subnet" "RENAME" {
     name                 = "RENAME"
-    resource_group_name  = "${azurerm_resource_group.hewsolgroup1.name}"
-    virtual_network_name = "${azurerm_virtual_network.hewsolnetwork1.name}"
+    resource_group_name  = "${azurerm_resource_group.RENAME.name}"
+    virtual_network_name = "${azurerm_virtual_network.RENAME.name}"
     address_prefix       = "10.0.1.0/24"
 }
 
@@ -38,7 +38,7 @@ resource "azurerm_subnet" "RENAME" {
 resource "azurerm_public_ip" "RENAME" {
     name                         = "RENAME"
     location                     = "uksouth"
-    resource_group_name          = "${azurerm_resource_group.hewsolgroup1.name}"
+    resource_group_name          = "${azurerm_resource_group.RENAME.name}"
     allocation_method            = "Dynamic"
 
     tags {
@@ -50,7 +50,7 @@ resource "azurerm_public_ip" "RENAME" {
 resource "azurerm_network_security_group" "RENAME" {
     name                = "RENAME"
     location            = "uksouth"
-    resource_group_name = "${azurerm_resource_group.hewsolgroup1.name}"
+    resource_group_name = "${azurerm_resource_group.RENAME.name}"
 
     security_rule {
         name                       = "SSH"
@@ -95,14 +95,14 @@ resource "azurerm_network_security_group" "RENAME" {
 resource "azurerm_network_interface" "RENAME" {
     name                      = "RENAME"
     location                  = "uksouth"
-    resource_group_name       = "${azurerm_resource_group.hewsolgroup1.name}"
-    network_security_group_id = "${azurerm_network_security_group.hewsolnsg1.id}"
+    resource_group_name       = "${azurerm_resource_group.RENAME.name}"
+    network_security_group_id = "${azurerm_network_security_group.RENAME.id}"
 
     ip_configuration {
         name                          = "nic_conf01"
-        subnet_id                     = "${azurerm_subnet.hewsolsubnet1.id}"
+        subnet_id                     = "${azurerm_subnet.RENAME.id}"
         private_ip_address_allocation = "Dynamic"
-        public_ip_address_id          = "${azurerm_public_ip.hewsolpublicip1.id}"
+        public_ip_address_id          = "${azurerm_public_ip.RENAME.id}"
     }
 
     tags {
@@ -114,7 +114,7 @@ resource "azurerm_network_interface" "RENAME" {
 resource "random_id" "randomId" {
     keepers = {
         # Generate a new ID only when a new resource group is defined
-        resource_group = "${azurerm_resource_group.hewsolgroup1.name}"
+        resource_group = "${azurerm_resource_group.RENAME.name}"
     location                        ="uksouth"
     }
 
@@ -124,7 +124,7 @@ resource "random_id" "randomId" {
 # Create storage account for boot diagnostics
 resource "azurerm_storage_account" "RENAME" {
     name                        = "diag${random_id.randomId.hex}"
-    resource_group_name         = "${azurerm_resource_group.hewsolgroup1.name}"
+    resource_group_name         = "${azurerm_resource_group.RENAME.name}"
     location                    = "uksouth"
     account_tier                = "Standard"
     account_replication_type    = "LRS"
@@ -138,12 +138,12 @@ resource "azurerm_storage_account" "RENAME" {
 resource "azurerm_virtual_machine" "RENAME" {
     name                  = "RENAME"
     location              = "uksouth"
-    resource_group_name   = "${azurerm_resource_group.hewsolgroup1.name}"
-    network_interface_ids = ["${azurerm_network_interface.hewsolnic1.id}"]
+    resource_group_name   = "${azurerm_resource_group.RENAME.name}"
+    network_interface_ids = ["${azurerm_network_interface.RENAME.id}"]
     vm_size               = "Standard_DS1_v2"
 
     storage_os_disk {
-        name              = "myOsDisk"
+        name              = "RENAME"
         caching           = "ReadWrite"
         create_option     = "FromImage"
         managed_disk_type = "Premium_LRS"
