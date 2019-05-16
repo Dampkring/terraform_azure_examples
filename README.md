@@ -1,2 +1,6 @@
 # terraform_azure_examples
-Examples of auto build environment from terraform on Azure
+
+-----
+This Repo contains terraform .tf files that can be run on Azure cloud CLI.
+-----
+
